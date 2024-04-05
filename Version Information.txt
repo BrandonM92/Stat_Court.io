@@ -1,0 +1,66 @@
+
+Program 1.0: (3/1/2024)
+On day 1 I created the initial foundation for the project which was how to web-scrape the website and get basic data for Teams as well as individual players. The original plan was to just simply search up an NBA team and output their results such as wins, losses, etc. for each season. This would evolve into deciding to do an application centered around NBA statistics such as player stats, team stats, and player awards. I confirmed that the basic functionality works but ran into the issue of bugs found whenever you enter a year before 2016 and I discovered this is because the HTML written is different and so is the page layout. So, we made a separate scraping method that accounts for this and depending on which year you ask for, the program will go to the corresponding method. 
+
+Program 1.1: (3/2/2024)
+On this day I added in the player search functionality and immediately ran into issues with certain player names such as Anthony Davis. The format is based off the first 5 letters of your last name and the first 2 letters of your first name followed by either 01 or 02, so on based on how many players have that same format. In the Anthony Davis case, he would be davisan02 so I needed a way to account for this and I would end this day finding that solution. So put simply once the method for web scraping receives a player’s name it will ask you if the name that is pulled from the initial search is who you are looking for and if not hit ‘N’ and it will move on. Depending on your selection, it will pull the chosen player stats. I would run into 2 other issues regarding names:
+- Inactive NBA Players would cause errors
+- Once I added Year functionality to the player search this also would have situations that cause errors. 
+Lastly, I needed to find a way to pull a team’s standing rank which I could not figure out in time before having to stop for the day and will work towards it tomorrow.
+
+Program 1.2: (3/2/2024)
+I added the Awards section and added the standing portion to the Team section but ran into an issue with the way the HTML/URL works so I used a list to manage it and it worked out. Ensured that players with no Awards wouldn’t throw an error so as far as the section for Awards go, that’s completely done and was quite simple since I had the idea of just grabbing every award a player has earned as of the 2024 season regardless of whether they are active, inactive, or retired. Debated on adding roster output when searching for teams but wanted to focus on user input validating and further error checking. The last part I worked on was when printing out player’s stats, I wanted to include the team or teams they played for that season but could only get the current team to work so I decided to use the first team they were on at the beginning of the season and the team they are on as of Feb 21st as that would guarantee it’s AFTER the NBA trade deadline so it should work in 95% of instances.
+
+Program 1.3: (3/3/2024):
+Ran into issues while checking for user input and that is players with 3 parts of their name, for instance Jaren Jackson Jr. Also ran into the limit restriction for the website we use and made a disclaimer on the introduction to explain NOT to abuse the program or you will get banned for an hour. Also linked the sites policies for the user to read. Created a new section to predict stats once you get the players last 5 games of statistics with the former being something like how I “predict” player performances when I place sports bets. At this point I was still contemplating adding GUI to the program, but I would decide against it for the sake of focusing on performance and functionality. 
+
+Program 1.4(3/5/2024):
+Integrated the Last 5/ Stat Predictor into the program and fixed any known bugs so far. Roster implementation is still in progress, cleaned up the code a bit. Nothing major as I was still theory crafting the sports betting aspect for the program. 
+
+Program 1.5 (3/6/2024):
+Discovered a bug that when you search for a player and get their stats after choosing a year, it was always giving you the stats from the 2023-2024 season because of WHERE I decided to pull from on the webpage. Also, this was the reason if you chose retired players, it would throw an error because the line does not exist on their pages if the player is retired. Once I fixed that and implemented the new method for names like Jaren Jackson Jr, I also solved the issue by getting all teams a player has played for that season to work. Added docstrings to most methods at this point and gave the stat predictor some added portions giving users an option to get the “Low Risk,” “Medium Risk” or “High Risk” prediction for stats. 
+
+
+Program 1.6 (3/7/2024):
+Finished Updating Stat Predictor with my own personal formula and added functionality that will give you an accurate count of how many times the player has scored or gotten that stat or higher in the current season. Ran into an issue with teams from before 1971 as that year the ABA still existed so teams were split from the NBA until 1972. So, I tweaked my code to only go as far back as 1971 BUT I also ran into an issue where the conferences were different, and the team names were also different. I would go on to fix BOTH issues by the end of this day. This was also the day I decided on naming the program “StatCourt” and got a logo designed courtesy of AI and then completed some more user validation and doc-strings. 
+
+
+Program 1.7 (3/7/2024):	
+Did quality of life updates to the program and added in all the older teams to the program like the Vancouver Grizzlies or the Charlotte Bobcats. Ran into player searching issues for years prior to 1980 because the three-point stat was not calculated as well as steals/blocks on the website, so I had to adjust my code to account for that. Also fixed outputting when you mistype a name and program still process it correctly, the output shows the error. Producing a battery of user input tests to ensure functionality and implemented try, except, else statements to any errors I found. 
+
+
+Program 1.8 (3/8/2024):
+Implemented a loop so as you go through any section of the system it will eventually lead you BACK to the main query and continue to do so as many times as the user wants. Also added in stop parts so slow down the user intentionally to prevent overusing the scrape method to prevent bans from the website. Also had to update the predictor section as I noticed it was giving me . out of TEAM games not games in which the player themselves has played in so for example if the team played 40 games but the player only played 21 of them it will give you the count like scored 10 points in 15/21 games instead of 15/40 like it was doing. This will update as the season goes on, so I will not have to worry about this moving forward. One potential addition to the program would be datetime so if it is currently past September 1st, it will use the new year as opposed to the previous seasons. 
+
+
+Program 1.9 (3/8/2024):
+Finished all doc strings for the program and added the option to end the program during the main query. Also ran into the issue of player checking still somehow crashing the program so I tweaked the code and fixed the “try,except,else” statement as well as coding in that if the player cannot be found instead of trying to use soup it will go back to the main query, and you can try again. This problem was also found in Last 5, and Awards so fixed it there too. 
+Developed 2 new additions to my program and began theory crafting it:
+-	Player Prop Bet Search
+o	This is essential for sports betting where you can type in a stat like Lebron James and 23.5 points (this is the bet you may find on like DraftKings) and it will inform you how many times the player has hit that this season. It is like a stat predictor except you can enter bets that you see from sports bet sites.
+-	Last 10 Days & Probability 
+o	Last 10 days player prop when it would output IF that player has achieved a specific stat over a specific percentage like what you find here:
+	https://stats.sportschatplace.com/player-props/basketball/nba/last-10-matches/80-percent
+o	 We will do it for 100%,80%, 60%, 40%. All the user needs to do is enter a player name and a percentage, and it will automatically output IF/ANY that qualify.
+I will place both insides of their own section called like “Betting Avenue” or “Betting Corner” and this will be the heart of the sports betting portion I wanted for this program. 
+
+
+Program 1.10 (3/9/2024):
+Created Betting Corner and implemented Last 10/Player Prop Checker. Added or Fixed Print Statement errors and included a gambler addiction disclaimer, while also adding an ASCII of the program name to the introduction. Fixed issue in Last 10 for retired players in case the player chooses them. Also added functionality that allows you to skip any part of the code you do not want to help account for users who like me want as much information as possible as well as those who would only want select information as quickly as possible. 
+
+
+Version 2.0 (3/9/24):
+Decided to include one last addition to the program and that is an Injury Report Checker. This was done by going to a different website for the data and took a lot of trial and error to get it to work properly. Added in name validation and adjustment to account for either user error or website using weird conventions when listing the players name. 
+Debated on including some form of output onto a text document but did not see the value toward the program being that high so I decided against it. 
+
+
+Version 2.1 (3/10/24):
+Revamped the entire code, realizing that I was misusing classes and trying to develop everything as if I were going the route of instantiating an object, but I was not. This fixed a lot of weird coding flags that PyCharm was giving me, and I included more text prompts to allow the user to remember what part of the code they are in and made it overall more streamlined. Also added hints in the print statements to help the user know which inputs are correct, and finished doc strings for all new additions to the program. Found a very minor and specific bug for certain players, for instance Tobias Harris has no awards so when you search him in the award section it was throwing an error. Added a new method that can be added to for every instance like Tobias I come across (Cam Thomas would be another issue I would find out later). 
+
+
+Version 2.2 (3/11/2024):
+- Revamped some code and simplified what I could without having to rearrange much or break anything. All StatCourt’s code has been tested, haven't been able to find any bugs or things that could crash the program except in player prop bet check where I made sure user enters a number. Also added navigation in Betting corner so you can choose one of the four options or do all of them 1 by 1. Finished my project proposal and a visual diagram that highlights the navigation for the user throughout the program. Finished my project overall and for someone who did not watch any tutorials nor knew how to web-scrape 15 days prior to starting this project,  I think I did well. 
+
+
+Version 2.3 (3/21/2024):
+- Fixed some code to account for Jaylin Williams and a few other players who are the first I have come across that up to 7 players with similar names.
